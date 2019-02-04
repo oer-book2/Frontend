@@ -3,12 +3,27 @@ import "./App.css";
 
 import Login from "./Login/Login";
 import authentication from "./Authentication/authentication";
+import Axios from "axios";
 
 class App extends Component {
+  state = {
+    bookList: []
+  };
+
+  componentDidMount() {
+    const endpoint = `${process.env.REACT_APP_URL}oer_booker/books`;
+
+    Axios.get(endpoint).then(res =>
+      this.setState({
+        bookList: res.data
+      })
+    );
+  }
+
   render() {
     return (
       <div className="App">
-        <HomePage />
+        <Home bookList={this.state.bookList} />
       </div>
     );
   }

@@ -1,0 +1,4 @@
+[build]
+base = "oer-booker2/"
+publish = "oer-booker2/build/"
+command = "npm run build"
