@@ -1,17 +1,22 @@
 import React from "react";
+import axios from "axios";
 
-const authentication = _ => Component1 => Component2 => {
-  return class newComponent extends React.Components {
+const authentication = _ => Component1 => Component2 =>
+  class extends React.Components {
     state = {
       isLoggedIn: false
     };
 
     componentDidMount() {
-      axios.get("http://host/api/data").then(res =>
+      if (localStorage.getItem("jwt")) {
         this.setState({
-          isLoggedIn: res.data.isLoggedIn
-        })
-      );
+          isLoggedIn: true
+        });
+      } else {
+        this.setState({
+          isLoggedIn: false
+        });
+      }
     }
 
     render() {
@@ -19,4 +24,5 @@ const authentication = _ => Component1 => Component2 => {
       return <Component2 />;
     }
   };
-};
+
+export default authentication;
