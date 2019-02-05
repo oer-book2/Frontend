@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 class SignUpForm extends React.Component {
   state = {
@@ -14,7 +16,7 @@ class SignUpForm extends React.Component {
   };
 
   signUp = user => {
-    const endpoint = `${process.env.REACT_APP_URL}oer_booker/users`;
+    const endpoint = `${process.env.REACT_APP_URL}/booker2/users`;
 
     if (this.state.password === this.state.confirmPassword) {
       axios
@@ -22,6 +24,7 @@ class SignUpForm extends React.Component {
         .then(res => localStorage.setItem("jwt", res.data.token))
         .catch(err => console.log(err));
     } else {
+      console.log(this.state.password, this.state.confirmPassword);
       alert("Ooop, looks like your passwords aren't matching");
     }
   };
@@ -36,12 +39,6 @@ class SignUpForm extends React.Component {
           onChange={this.onChange}
         />
         <input
-          type="email"
-          name="email"
-          placeholder="Enter Email"
-          onChange={this.onChange}
-        />
-        <input
           type="password"
           name="password"
           placeholder="Password"
@@ -49,7 +46,7 @@ class SignUpForm extends React.Component {
         />
         <input
           type="password"
-          name="confirm-password"
+          name="confirmPassword"
           placeholder="Confirm Password"
           onChange={this.onChange}
         />
@@ -61,7 +58,7 @@ class SignUpForm extends React.Component {
 
         <div className="other-options">
           <small>
-            <a href="#">Already have an account?</a>
+            <Link to="/login">Already have an account?</Link>
           </small>
         </div>
       </div>

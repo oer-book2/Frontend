@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 class LoginForm extends React.Component {
   state = {
@@ -50,7 +51,9 @@ class LoginForm extends React.Component {
             <a href="#">Forgot your password?</a>
           </small>
           <small>
-            <a href="#">Dont have an account?</a>
+            <Link to="/Sign-up" href="#">
+              Dont have an account?
+            </Link>
           </small>
         </div>
       </div>
