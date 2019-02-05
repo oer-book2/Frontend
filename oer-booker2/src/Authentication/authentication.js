@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 
-const authentication = _ => Component1 => Component2 =>
-  class extends React.Components {
+const authentication = Component1 => Component2 =>
+  class extends React.Component {
     state = {
       isLoggedIn: false
     };

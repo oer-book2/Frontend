@@ -14,7 +14,7 @@ class SignUpForm extends React.Component {
   };
 
   signUp = user => {
-    const endpoint = `${process.env.REACT_APP_URL}oer_booker/users`;
+    const endpoint = `https://oerbookr2.herokuapp.com/oerbooker/oerbooker/register`;
 
     if (this.state.password === this.state.confirmPassword) {
       axios

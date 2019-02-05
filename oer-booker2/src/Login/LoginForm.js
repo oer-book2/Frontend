@@ -11,39 +11,40 @@ class LoginForm extends React.Component {
 
   onChange = e => {
     this.setState({
-      [e.target.name]: e.target.value
+      loginInfo: {
+        ...this.state.loginInfo,
+        [e.target.name]: e.target.value
+      }
     });
   };
 
-  logIn = loginInfo => {
-    const endpoint = `${process.env.REACT_APP_URL}/oer_booker/login`;
+  logIn = e => {
+    e.preventDefault();
+    const loginInfo = this.state.loginInfo;
+    const endpoint = `https://oerbookr2.herokuapp.com/oerbooker/login`;
 
     axios
       .post(endpoint, loginInfo)
       .then(res => localStorage.setItem("jwt", res.data.token))
-      .catch(err => alert("Username / password mismatched"));
+      .catch(err => alert("Username / password mismatched", err));
   };
 
   render() {
     return (
-      <div className="login-form">
+      <form className="login-form" onSubmit={this.logIn}>
         <input
           type="text"
           name="name"
-          value={this.state.email}
+          value={this.state.loginInfo.name}
           onChange={this.onChange}
         />
         <input
           type="password"
           name="password"
-          value={this.state.password}
+          value={this.state.loginInfo.password}
           onChange={this.onChange}
         />
-        <input
-          type="button"
-          value="login"
-          onClick={() => this.logIn(this.state.loginInfo)}
-        />
+        <button type="submit">Login</button>
 
         <div className="other-options">
           <small>
@@ -53,7 +54,7 @@ class LoginForm extends React.Component {
             <a href="#">Dont have an account?</a>
           </small>
         </div>
-      </div>
+      </form>
     );
   }
 }
