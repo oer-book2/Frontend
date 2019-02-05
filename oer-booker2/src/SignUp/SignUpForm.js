@@ -16,7 +16,8 @@ class SignUpForm extends React.Component {
   };
 
   signUp = user => {
-    const endpoint = `${process.env.REACT_APP_URL}/booker2/users`;
+    const endpoint = `https://oerbookr2.herokuapp.com/oerbooker/oerbooker/register`;
+    console.log("signing up");
 
     if (this.state.password === this.state.confirmPassword) {
       axios
@@ -27,11 +28,17 @@ class SignUpForm extends React.Component {
       console.log(this.state.password, this.state.confirmPassword);
       alert("Ooop, looks like your passwords aren't matching");
     }
+
+    this.setState({
+      name: "",
+      password: "",
+      confirmPassword: ""
+    });
   };
 
   render() {
     return (
-      <div className="sign-up-form">
+      <form className="sign-up-form" onSubmit={() => this.signUp(this.state)}>
         <input
           type="text"
           name="name"
@@ -61,7 +68,7 @@ class SignUpForm extends React.Component {
             <Link to="/login">Already have an account?</Link>
           </small>
         </div>
-      </div>
+      </form>
     );
   }
 }
