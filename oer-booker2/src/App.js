@@ -4,6 +4,7 @@ import "./App.css";
 import Login from "./Login/Login";
 import authentication from "./Authentication/authentication";
 import Axios from "axios";
+import Home from "./Components/Home";
 
 class App extends Component {
   state = {

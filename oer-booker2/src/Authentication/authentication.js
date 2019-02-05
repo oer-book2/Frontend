@@ -8,7 +8,7 @@ const authentication = _ => Component1 => Component2 =>
     };
 
     componentDidMount() {
-      if (localStorage.getItem("jwt", token)) {
+      if (localStorage.getItem("jwt")) {
         this.setState({
           isLoggedIn: true
         });
