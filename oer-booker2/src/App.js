@@ -26,7 +26,9 @@ class App extends Component {
   searchOnChange = e => {
     this.props.searchOnChange(e.target.value);
     this.props.itemSearch(
-      this.props.books.filter(book => book.title.includes(e.target.value))
+      this.props.books.filter(book =>
+        book.title.toLowerCase().includes(e.target.value.toLowerCase())
+      )
     );
   };
 
