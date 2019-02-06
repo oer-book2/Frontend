@@ -32,6 +32,18 @@ class App extends Component {
     );
   };
 
+  chosenOne = e => {
+    if (e.target.value === "All") {
+      this.props.itemSearch(this.props.books);
+    } else {
+      this.props.itemSearch(
+        this.props.books.filter(book =>
+          book.subject.toLowerCase().includes(e.target.value.toLowerCase())
+        )
+      );
+    }
+  };
+
   render() {
     console.log(this.props.signUpInfo);
     if (this.props.isLoggedIn) {
@@ -45,10 +57,12 @@ class App extends Component {
             onChange={e => this.searchOnChange(e)}
           />
           <br />
-          <select onSelect={e => this.onSelect(e)}>
+          <select onChange={e => this.chosenOne(e)}>
+            <option>All</option>
             <option>Math</option>
+            <option>English</option>
             <option>History</option>
-            <option>Arts</option>
+            <option>Art</option>
             <option>Psychology</option>
           </select>
           <Home bookList={this.props.displayedBooks} />
