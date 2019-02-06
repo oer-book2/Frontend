@@ -1,9 +1,22 @@
 import React from "react";
-import LoginForm from "./LoginForm";
+import { Route } from "react-router-dom";
 
-const Login = () => (
+// import { userLogin, userSingUp } from "../actions";
+import LoginForm from "./LoginForm";
+import SignUpForm from "../SignUp/SignUpForm";
+
+const Login = props => (
   <div className="login">
-    <LoginForm />
+    <LoginForm
+      signUpInfo={props.signUpInfo}
+      loginInfo={props.loginInfo}
+      loginOnChange={props.loginOnChange}
+      userLogIn={props.userLogIn}
+    />
+    <SignUpForm
+      signUpInfo={props.signUpInfo}
+      signUpOnChange={props.signUpOnChange}
+    />
   </div>
 );
 

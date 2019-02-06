@@ -1,44 +1,43 @@
 import React from "react";
+import { Route, Link } from "react-router-dom";
+import axios from "axios";
 
 class SignUpForm extends React.Component {
-  state = {
-    name: "",
-    password: "",
-    confirmPassword: ""
-  };
-
   onChange = e => {
-    this.setState({
+    this.props.signUpOnChange({
+      ...this.props.signUpInfo,
       [e.target.name]: e.target.value
     });
   };
 
-  signUp = user => {
-    const endpoint = `https://oerbookr2.herokuapp.com/oerbooker/oerbooker/register`;
+  signUp = _ => {
+    const endpoint = `https://oerbookr2.herokuapp.com/oerbooker/register`;
+    console.log("signing up");
 
-    if (this.state.password === this.state.confirmPassword) {
+    const user = this.props.signUpInfo;
+    if (
+      this.props.signUpInfo.password === this.props.signUpInfo.confirmPassword
+    ) {
       axios
         .post(endpoint, user)
         .then(res => localStorage.setItem("jwt", res.data.token))
         .catch(err => console.log(err));
     } else {
+      console.log(
+        this.props.signUpInfo.password,
+        this.props.signUpInfo.confirmPassword
+      );
       alert("Ooop, looks like your passwords aren't matching");
     }
   };
 
   render() {
     return (
-      <div className="sign-up-form">
+      <form className="sign-up-form" onSubmit={this.signUp}>
         <input
           type="text"
           name="name"
           placeholder="Enter full name"
-          onChange={this.onChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter Email"
           onChange={this.onChange}
         />
         <input
@@ -49,22 +48,18 @@ class SignUpForm extends React.Component {
         />
         <input
           type="password"
-          name="confirm-password"
+          name="confirmPassword"
           placeholder="Confirm Password"
           onChange={this.onChange}
         />
-        <input
-          type="button"
-          value="Sign me up"
-          onClick={() => this.signUp(this.state)}
-        />
+        <input type="button" value="Sign me up" onClick={this.signUp} />
 
         <div className="other-options">
           <small>
-            <a href="#">Already have an account?</a>
+            <Link to="/login">Already have an account?</Link>
           </small>
         </div>
-      </div>
+      </form>
     );
   }
 }
