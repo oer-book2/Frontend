@@ -11,6 +11,7 @@ export const USER_SIGNUP = "USER_SIGNUP";
 export const SIGNUP_ONCHANGE = "SIGNUP_ONCHANGE";
 export const ITEM_SEARCH = "ITEM_SEARCH";
 export const SEARCH_ONCHANGE = "SEARCH_ONCHANGE";
+export const BOOK_BY_ID = "BOOK_BY_ID";
 
 const userEndpoint = `${process.env.REACT_APP_URL}/oerbooker/users`;
 const booksEndpoint = "https://oerbookr2.herokuapp.com/oerbooker/textbooks";
@@ -45,6 +46,11 @@ export const userSignUp = signUpInfo => dispatch => {
     .catch(err => console.log(err));
 };
 
+export const getBookById = id => dispatch => {
+  axios
+    .get(`https://oerbookr2.herokuapp.com/oerbooker/textbooks/${id}`)
+    .then(res => dispatch({ type: BOOK_BY_ID, payload: res.data.bookdata }));
+};
 export const loginOnChange = loginInfo => {
   return {
     type: LOGIN_ONCHANGE,

@@ -11,7 +11,8 @@ import {
   LOGIN_ONCHANGE,
   SIGNUP_ONCHANGE,
   ITEM_SEARCH,
-  SEARCH_ONCHANGE
+  SEARCH_ONCHANGE,
+  BOOK_BY_ID
 } from "../actions";
 
 const initialState = {
@@ -41,6 +42,12 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         books: action.payload,
+        displayedBooks: action.payload
+      };
+    case BOOK_BY_ID:
+      console.log(action.payload);
+      return {
+        ...state,
         displayedBooks: action.payload
       };
     case USER_LOGIN:

@@ -11,7 +11,8 @@ import {
   loginOnChange,
   signUpOnChange,
   itemSearch,
-  searchOnChange
+  searchOnChange,
+  getBookById
 } from "./actions";
 
 import "./App.css";
@@ -45,7 +46,6 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.props.books.map(book => console.log(book.title)));
     if (this.props.isLoggedIn) {
       return (
         <div className="App">
@@ -65,7 +65,10 @@ class App extends Component {
             <option>Art</option>
             <option>Psychology</option>
           </select>
-          <Home bookList={this.props.displayedBooks} />
+          <Home
+            bookList={this.props.displayedBooks}
+            getBookById={this.props.getBookById}
+          />
         </div>
       );
     } else {
@@ -100,7 +103,8 @@ export default connect(
     loginOnChange,
     signUpOnChange,
     itemSearch,
-    searchOnChange
+    searchOnChange,
+    getBookById
   }
 )(App);
 
