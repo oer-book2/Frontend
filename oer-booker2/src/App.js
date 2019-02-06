@@ -1,34 +1,70 @@
 import React, { Component } from "react";
+import axios from "axios";
+import { connect } from "react-redux";
+
+import authentication from "./Authentication/authentication";
+import Login from "./Login/Login";
+import Home from "./Components/Home";
+import { getUsers, getBooks, loginOnChange, signUpOnChange } from "./actions";
+
 import "./App.css";
 
-import Login from "./Login/Login";
-import authentication from "./Authentication/authentication";
-import axios from "axios";
-import Home from "./Components/Home";
-
 class App extends Component {
-  state = {
-    bookList: []
-  };
-
   componentDidMount() {
-    const endpoint = `${process.env.REACT_APP_URL}oer_booker/books`;
-
-    axios.get(endpoint).then(res =>
-      this.setState({
-        bookList: res.data
-      })
-    );
+    //Fetches data from backend to set to state
+    // this.props.getUsers();
+    // this.props.getBooks();
   }
 
+  onSelect = e => {
+    console.log("testing", e.target.value);
+  };
+
   render() {
-    return (
-      <div className="App">
-        <h1>Home</h1>
-        <Home bookList={this.state.bookList} />
-      </div>
-    );
+    console.log(this.props.signUpInfo);
+    if (this.props.isLoggedIn) {
+      return (
+        <div className="App">
+          <h1>Home</h1>
+          <input type="text" placeholder="Search by title" />
+          <input type="button" value="Search" />
+          <br />
+          <select onSelect={e => this.onSelect(e)}>
+            <option>Math</option>
+            <option>History</option>
+            <option>Arts</option>
+            <option>Psychology</option>
+          </select>
+          <Home bookList={this.props.books} />
+        </div>
+      );
+    } else {
+      return (
+        <Login
+          loginInfo={this.props.loginInfo}
+          loginOnChange={this.props.loginOnChange}
+          userLogIn={this.props.userLogIn}
+          signUpInfo={this.props.signUpInfo}
+          signUpOnChange={this.props.signUpOnChange}
+        />
+      );
+    }
   }
 }
 
-export default authentication(App)(Login);
+const mapStateToProps = state => ({
+  users: state.users,
+  books: state.books,
+  loginInfo: state.loginInfo,
+  signUpInfo: state.signUpInfo,
+  isLoggedIn: state.isLoggedIn
+});
+
+export default connect(
+  mapStateToProps,
+  { getUsers, getBooks, loginOnChange, signUpOnChange }
+)(App);
+
+// export default authentication(App)(Login);
+
+// export default App;

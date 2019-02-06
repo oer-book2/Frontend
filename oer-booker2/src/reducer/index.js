@@ -1,40 +1,57 @@
+import dummyData from "../dummyData";
+
 import {
   FETCHING_USER,
-  USER_FETCHED,
+  USERS_FETCHED,
   FETCHING_BOOKS,
   BOOKS_FETCHED,
-  FETCHING_FAILED,
+  FETCH_FAILED,
   USER_LOGIN,
-  USER_SIGNUP
-} from "../reducer";
+  USER_SIGNUP,
+  LOGIN_ONCHANGE,
+  SIGNUP_ONCHANGE
+} from "../actions";
 
 const initialState = {
   users: [],
-  books: [],
+  books: dummyData,
 
-  userLogin: {
+  loginInfo: {
     name: "",
     password: ""
   },
 
-  userSignUp: {
+  signUpInfo: {
     name: "",
     password: "",
     confirmPassword: ""
-  }
+  },
+  isLoggedIn: true
 };
 
 export const reducer = (state = initialState, action) => {
+  console.log(action.type);
   switch (action.type) {
-    case USER_FETCHED:
+    case USERS_FETCHED:
       return {};
     case BOOKS_FETCHED:
       return {};
     case USER_LOGIN:
-      return {};
-    case USER_SIGNUP:
-      return {};
-    case FETCHING_FAILED:
+      return {
+        ...state,
+        users: action.payload
+      };
+    case LOGIN_ONCHANGE:
+      return {
+        ...state,
+        loginInfo: action.payload
+      };
+    case SIGNUP_ONCHANGE:
+      return {
+        ...state,
+        signUpInfo: action.payload
+      };
+    case FETCH_FAILED:
       return {};
     default:
       return state;

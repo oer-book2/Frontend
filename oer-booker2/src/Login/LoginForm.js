@@ -1,28 +1,20 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 
 class LoginForm extends React.Component {
-  state = {
-    loginInfo: {
-      name: "",
-      password: ""
-    }
-  };
-
   onChange = e => {
-    this.setState({
-      loginInfo: {
-        ...this.state.loginInfo,
-        [e.target.name]: e.target.value
-      }
+    this.props.loginOnChange({
+      ...this.props.loginInfo,
+      [e.target.name]: e.target.value
     });
   };
 
   logIn = e => {
     e.preventDefault();
-    const loginInfo = this.state.loginInfo;
+    const loginInfo = this.props.loginInfo;
     const endpoint = `https://oerbookr2.herokuapp.com/oerbooker/login`;
+    console.log(loginInfo);
 
     axios
       .post(endpoint, loginInfo)
@@ -32,29 +24,27 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <form className="login-form" onSubmit={this.logIn}>
+      <form className="login-form">
         <input
           type="text"
           name="name"
-          value={this.state.loginInfo.name}
+          value={this.props.loginInfo.name}
           onChange={this.onChange}
         />
         <input
           type="password"
           name="password"
-          value={this.state.loginInfo.password}
+          value={this.props.loginInfo.password}
           onChange={this.onChange}
         />
-        <button type="submit">Login</button>
+        <input type="button" value="Submit" onClick={this.logIn} />
 
         <div className="other-options">
           <small>
             <a href="#">Forgot your password?</a>
           </small>
           <small>
-            <Link to="/Sign-up" href="#">
-              Dont have an account?
-            </Link>
+            <Link to="/Sign-up">Dont have an account?</Link>
           </small>
         </div>
       </form>

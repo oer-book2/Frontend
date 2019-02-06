@@ -1,44 +1,39 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Route, Link } from "react-router-dom";
 import axios from "axios";
 
 class SignUpForm extends React.Component {
-  state = {
-    name: "",
-    password: "",
-    confirmPassword: ""
-  };
-
   onChange = e => {
-    this.setState({
+    this.props.signUpOnChange({
+      ...this.props.signUpInfo,
       [e.target.name]: e.target.value
     });
   };
 
-  signUp = user => {
-    const endpoint = `https://oerbookr2.herokuapp.com/oerbooker/oerbooker/register`;
+  signUp = _ => {
+    const endpoint = `https://oerbookr2.herokuapp.com/oerbooker/register`;
     console.log("signing up");
 
-    if (this.state.password === this.state.confirmPassword) {
+    const user = this.props.signUpInfo;
+    if (
+      this.props.signUpInfo.password === this.props.signUpInfo.confirmPassword
+    ) {
       axios
         .post(endpoint, user)
         .then(res => localStorage.setItem("jwt", res.data.token))
         .catch(err => console.log(err));
     } else {
-      console.log(this.state.password, this.state.confirmPassword);
+      console.log(
+        this.props.signUpInfo.password,
+        this.props.signUpInfo.confirmPassword
+      );
       alert("Ooop, looks like your passwords aren't matching");
     }
-
-    this.setState({
-      name: "",
-      password: "",
-      confirmPassword: ""
-    });
   };
 
   render() {
     return (
-      <form className="sign-up-form" onSubmit={() => this.signUp(this.state)}>
+      <form className="sign-up-form" onSubmit={this.signUp}>
         <input
           type="text"
           name="name"
@@ -57,11 +52,7 @@ class SignUpForm extends React.Component {
           placeholder="Confirm Password"
           onChange={this.onChange}
         />
-        <input
-          type="button"
-          value="Sign me up"
-          onClick={() => this.signUp(this.state)}
-        />
+        <input type="button" value="Sign me up" onClick={this.signUp} />
 
         <div className="other-options">
           <small>

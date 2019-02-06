@@ -7,7 +7,7 @@ const authentication = Component1 => Component2 =>
       isLoggedIn: false
     };
 
-    componentDidMount() {
+    componentDidUpdate() {
       if (localStorage.getItem("jwt")) {
         this.setState({
           isLoggedIn: true
