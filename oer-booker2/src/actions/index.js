@@ -13,8 +13,9 @@ export const ITEM_SEARCH = "ITEM_SEARCH";
 export const SEARCH_ONCHANGE = "SEARCH_ONCHANGE";
 
 const userEndpoint = `${process.env.REACT_APP_URL}/oerbooker/users`;
-const booksEndpoint = `${process.env.REACT_APP_URL}/oerbooker/books`;
-const booksByIdEndpoint = `${process.env.REACT_APP_URL}/oerbooker/books/:id`;
+const booksEndpoint = "https://oerbookr2.herokuapp.com/oerbooker/textbooks";
+const booksByIdEndpoint =
+  "https://oerbookr2.herokuapp.com/oerbooker/textbooks/{textbookId}";
 const logInEndpoint = "https://oerbookr2.herokuapp.com/oerbooker/login";
 const signUpEndpoint = `${process.env.REACT_APP_URL}/oerbooker/users`;
 const reviewsEndpoint = `${process.env.REACT_APP_URL}/oerbooker/users/reviews`;

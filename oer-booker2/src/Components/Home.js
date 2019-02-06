@@ -2,12 +2,8 @@ import React from "react";
 import BookList from "./BookList";
 
 const Home = props => {
-  console.log(props);
-  return (
-    <div className="home-page">
-      <BookList bookList={props.bookList} />
-    </div>
-  );
+  const { bookList } = props;
+  return <BookList bookList={bookList} />;
 };
 
 export default Home;

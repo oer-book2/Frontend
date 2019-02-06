@@ -16,8 +16,8 @@ import {
 
 const initialState = {
   users: [],
-  books: dummyData,
-  displayedBooks: dummyData,
+  books: [],
+  displayedBooks: [],
 
   loginInfo: {
     name: "",
@@ -34,12 +34,15 @@ const initialState = {
 };
 
 export const reducer = (state = initialState, action) => {
-  console.log(action.type);
   switch (action.type) {
     case USERS_FETCHED:
       return {};
     case BOOKS_FETCHED:
-      return {};
+      return {
+        ...state,
+        books: action.payload,
+        displayedBooks: action.payload
+      };
     case USER_LOGIN:
       return {
         ...state,

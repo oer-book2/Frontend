@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-
+import { Route } from "react-router-dom";
 import authentication from "./Authentication/authentication";
 import Login from "./Login/Login";
 import Home from "./Components/Home";
@@ -20,7 +20,7 @@ class App extends Component {
   componentDidMount() {
     //Fetches data from backend to set to state
     // this.props.getUsers();
-    // this.props.getBooks();
+    this.props.getBooks();
   }
 
   searchOnChange = e => {
@@ -45,7 +45,7 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.props.signUpInfo);
+    console.log(this.props.books.map(book => console.log(book.title)));
     if (this.props.isLoggedIn) {
       return (
         <div className="App">
