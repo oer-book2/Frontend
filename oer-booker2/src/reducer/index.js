@@ -9,12 +9,15 @@ import {
   USER_LOGIN,
   USER_SIGNUP,
   LOGIN_ONCHANGE,
-  SIGNUP_ONCHANGE
+  SIGNUP_ONCHANGE,
+  ITEM_SEARCH,
+  SEARCH_ONCHANGE
 } from "../actions";
 
 const initialState = {
   users: [],
   books: dummyData,
+  displayedBooks: dummyData,
 
   loginInfo: {
     name: "",
@@ -26,7 +29,8 @@ const initialState = {
     password: "",
     confirmPassword: ""
   },
-  isLoggedIn: true
+  isLoggedIn: true,
+  search: ""
 };
 
 export const reducer = (state = initialState, action) => {
@@ -50,6 +54,16 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         signUpInfo: action.payload
+      };
+    case ITEM_SEARCH:
+      return {
+        ...state,
+        displayedBooks: action.payload
+      };
+    case SEARCH_ONCHANGE:
+      return {
+        ...state,
+        search: action.payload
       };
     case FETCH_FAILED:
       return {};

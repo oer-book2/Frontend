@@ -9,6 +9,8 @@ export const USER_LOGIN = "USER_LOGIN";
 export const LOGIN_ONCHANGE = "LOGIN_ONCHANGE";
 export const USER_SIGNUP = "USER_SIGNUP";
 export const SIGNUP_ONCHANGE = "SIGNUP_ONCHANGE";
+export const ITEM_SEARCH = "ITEM_SEARCH";
+export const SEARCH_ONCHANGE = "SEARCH_ONCHANGE";
 
 const userEndpoint = `${process.env.REACT_APP_URL}/oerbooker/users`;
 const booksEndpoint = `${process.env.REACT_APP_URL}/oerbooker/books`;
@@ -59,5 +61,17 @@ export const signUpOnChange = signUpInfo => {
       password: signUpInfo.password,
       confirmPassword: signUpInfo.confirmPassword
     }
+  };
+};
+export const itemSearch = searchItem => {
+  return {
+    type: ITEM_SEARCH,
+    payload: searchItem
+  };
+};
+export const searchOnChange = searchItem => {
+  return {
+    type: SEARCH_ONCHANGE,
+    payload: searchItem
   };
 };
