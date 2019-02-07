@@ -1,5 +1,6 @@
 const dummyData = [
   {
+    id: 1,
     title:
       "Exploring Movie Construction & Production: What's so exciting about movies?",
     description:
@@ -14,6 +15,7 @@ const dummyData = [
       "https://raw.githubusercontent.com/oer-book2/Frontend/master/oer-booker2/src/images/movieconstruction.png"
   },
   {
+    id: 2,
     title: "A First Course in Linear Algebra",
     description:
       "A First Course in Linear Algebra is an introductory textbook aimed at college-level sophomores and juniors. Typically students will have taken calculus, but it is not a prerequisite. The book begins with systems of linear equations, then covers matrix algebra, before taking up finite-dimensional vector spaces in full generality. The final chapter covers matrix representations of linear transformations, through diagonalization, change of basis and Jordan canonical form. Determinants and eigenvalues are covered along the way.",
@@ -26,6 +28,7 @@ const dummyData = [
       "https://raw.githubusercontent.com/oer-book2/Frontend/master/oer-booker2/src/images/defaultImage.png"
   },
   {
+    id: 3,
     title: "Discover Psychology 2.0 - A Brief Introductory Text",
     description:
       "This textbook presents core concepts common to introductory courses. The 15 units cover the traditional areas of intro-to-psychology; ranging from biological aspects of psychology to psychological disorders to social psychology. This book can be modified: feel free to add or remove modules to better suit your specific needs.",
@@ -38,6 +41,7 @@ const dummyData = [
       "https://raw.githubusercontent.com/oer-book2/Frontend/master/oer-booker2/src/images/discoverpsychology.png"
   },
   {
+    id: 4,
     title: "American Environmental History",
     description:
       "Our goal is to deal with both events and ideas. But realistically, this is a survey of American Environmental History stretching from prehistory to the present. We're going to spend most of our time on events, especially because the environmental elements of many key events in American History are not well understood. Too often our stories about America's past devote all their attention to political debates and to the ideologies of elite leaders or philosophies of founding fathers, and these tales are told against a neutral background that isn't part of the story at all. The main goal of this text is to show that it's really not possible to understand our past while ignoring the environment.",
@@ -50,6 +54,7 @@ const dummyData = [
       "https://raw.githubusercontent.com/oer-book2/Frontend/master/oer-booker2/src/images/americanenvironmentalhistory.jpg"
   },
   {
+    id: 5,
     title: "Basic Reading and Writing",
     description:
       "Basic Reading and Writing was developed by Lumen Learning in collaboration with Cerritos College (Norwalk, CA). It was designed to be a resource for the precollege English composition classroom and is the first of a three-course 'Path to College Composition' series.",

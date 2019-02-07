@@ -1,6 +1,8 @@
 import React from "react";
 import { Route, Link } from "react-router-dom";
 import axios from "axios";
+import { connect } from "react-redux";
+import { signUpOnChange } from "../actions";
 
 class SignUpForm extends React.Component {
   onChange = e => {
@@ -18,8 +20,10 @@ class SignUpForm extends React.Component {
     if (
       this.props.signUpInfo.password === this.props.signUpInfo.confirmPassword
     ) {
+      let newUser = { name: user.name, password: user.password };
+
       axios
-        .post(endpoint, user)
+        .post(endpoint, newUser)
         .then(res => localStorage.setItem("jwt", res.data.token))
         .catch(err => console.log(err));
     } else {
@@ -44,13 +48,13 @@ class SignUpForm extends React.Component {
           type="password"
           name="password"
           placeholder="Password"
-          onChange={this.onChange}
+          onChange={e => this.onChange(e)}
         />
         <input
           type="password"
           name="confirmPassword"
           placeholder="Confirm Password"
-          onChange={this.onChange}
+          onChange={e => this.onChange(e)}
         />
         <input type="button" value="Sign me up" onClick={this.signUp} />
 
@@ -64,4 +68,13 @@ class SignUpForm extends React.Component {
   }
 }
 
-export default SignUpForm;
+const mapStateToProps = state => ({
+  signUpInfo: state.signUpInfo
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    signUpOnChange
+  }
+)(SignUpForm);

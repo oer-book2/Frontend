@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import { Link, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import { loginOnChange } from "../actions";
 
 class LoginForm extends React.Component {
   onChange = e => {
@@ -10,10 +12,9 @@ class LoginForm extends React.Component {
     });
   };
 
-  logIn = e => {
-    e.preventDefault();
+  logIn = _ => {
     const loginInfo = this.props.loginInfo;
-    const endpoint = `https://oerbookr2.herokuapp.com/oerbooker/login`;
+    const endpoint = "https://oerbookr2.herokuapp.com/oerbooker/login";
     console.log(loginInfo);
 
     axios
@@ -24,16 +25,20 @@ class LoginForm extends React.Component {
 
   render() {
     return (
+      //onSubmit wont work
+
       <form className="login-form">
         <input
           type="text"
           name="name"
+          placeholder="Name"
           value={this.props.loginInfo.name}
           onChange={this.onChange}
         />
         <input
           type="password"
           name="password"
+          placeholder="Password"
           value={this.props.loginInfo.password}
           onChange={this.onChange}
         />
@@ -44,7 +49,7 @@ class LoginForm extends React.Component {
             <a href="#">Forgot your password?</a>
           </small>
           <small>
-            <Link to="/Sign-up">Dont have an account?</Link>
+            <Link to="/login/sign-up">Dont have an account?</Link>
           </small>
         </div>
       </form>
@@ -52,4 +57,14 @@ class LoginForm extends React.Component {
   }
 }
 
-export default LoginForm;
+const mapStateToProps = state => ({
+  loginInfo: state.loginInfo,
+  signUpInfo: state.signUpInfo
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    loginOnChange
+  }
+)(LoginForm);
