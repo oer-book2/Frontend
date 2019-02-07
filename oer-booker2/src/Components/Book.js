@@ -1,67 +1,96 @@
 import React from 'react';
-import { getBookById, deleteComment, postReview } from '../actions';
+import {
+    getBookById,
+    deleteComment,
+    postReview,
+    updateReview,
+} from '../actions';
 import { connect } from 'react-redux';
 import BookInfo from './BookInfo';
 import Reviews from './Reviews';
 
 class Book extends React.Component {
+    state = {
+        comment: '',
+        rating: 1,
+    };
+
     componentDidMount() {
-        const { id } = this.props.match.params;
-        this.fetchBook(id);
+        this.fetchBook();
     }
 
-    fetchBook = id => {
+    commentAreaOnChange = e => {
+        this.setState({
+            comment: e.target.value,
+        });
+    };
+    ratingOnChange = e => {
+        this.setState({
+            rating: e.target.value,
+        });
+    };
+
+    fetchBook = () => {
+        const { id } = this.props.match.params;
         this.props.getBookById(id);
     };
 
+    postMe = e => {
+        e.preventDefault();
+        this.props.postReview(this.state, this.props.book.id);
+        this.fetchBook();
+    };
+
     render() {
+        const book = this.props.book;
         return (
             <div>
-                {this.props.displayedBooks.map(book => {
-                    return (
-                        <div>
-                            <BookInfo
-                                key={book.id}
-                                id={book.id}
-                                title={book.title}
-                                state={this.state}
-                                author={book.author}
-                                subject={book.subject}
-                                rating={book['avg-rating']}
-                                description={book.description}
-                                postReview={this.props.postReview}
-                                ratingOnChange={this.ratingOnChange}
-                                commentAreaOnChange={this.commentAreaOnChange}
-                            />
-                        </div>
-                    );
-                })}
+                <BookInfo
+                    key={book.id}
+                    book={book}
+                    postReview={this.props.postReview}
+                    ratingOnChange={this.ratingOnChange}
+                    commentAreaOnChange={this.commentAreaOnChange}
+                />
+
                 {this.props.reviews.map(review => {
                     return (
                         <div>
                             <Reviews
                                 deleteComment={this.props.deleteComment}
                                 key={review.id}
-                                comment={review.comment}
-                                id={review.id}
-                                rating={review.rating}
+                                review={review}
+                                updateReview={this.props.updateReview}
                             />
                         </div>
                     );
                 })}
+                <textarea onChange={e => this.commentAreaOnChange(e)} />
+                <select onChange={e => this.ratingOnChange(e)}>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                </select>
+                <input
+                    type="button"
+                    onClick={this.postMe}
+                    value="Add Comment"
+                />
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    displayedBooks: state.displayedBooks,
+    book: state.oneBook,
     reviews: state.reviews,
 });
 
 export default connect(
     mapStateToProps,
-    { getBookById, deleteComment, postReview }
+    { getBookById, deleteComment, postReview, updateReview }
 )(Book);
 
 // export default Book;

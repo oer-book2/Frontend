@@ -43,7 +43,6 @@ export const getBooks = _ => dispatch => {
 };
 
 export const userSignUp = signUpInfo => dispatch => {
-    console.log(signUpInfo);
     axios
         .post(signUpEndpoint, signUpInfo)
         .then(res => dispatch({ type: USER_SIGNUP, payload: res.data }))
@@ -57,7 +56,7 @@ export const getBookById = id => dispatch => {
             console.log(res);
             dispatch({
                 type: BOOK_BY_ID,
-                payload: res.data.bookdata,
+                payload: res.data.bookdata[0],
                 reviews: res.data.reviews,
             });
         })
@@ -83,7 +82,6 @@ export const signUpOnChange = signUpInfo => {
     };
 };
 export const itemSearch = searchItem => {
-    console.log(searchItem);
     return {
         type: ITEM_SEARCH,
         payload: searchItem,
@@ -104,7 +102,7 @@ export const loggedIn = _ => {
 export const deleteComment = id => dispatch => {
     axios
         .delete(`https://oerbookr2.herokuapp.com/oerbooker/reviews/${id}`)
-        .then(res => dispatch({ type: REVIEW_DELETE, payload: res.data }));
+        .then(res => dispatch({ type: REVIEW_DELETE, payload: 'success' }));
 };
 export const postReview = (review, id) => dispatch => {
     axios
@@ -113,4 +111,11 @@ export const postReview = (review, id) => dispatch => {
             review
         )
         .then(res => dispatch({ type: POST_REVIEW, payload: res.data }));
+};
+
+export const updateReview = (id, review) => dispatch => {
+    axios
+        .put(`https://oerbookr2.herokuapp.com/oerbooker/reviews/${id}`, review)
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
 };

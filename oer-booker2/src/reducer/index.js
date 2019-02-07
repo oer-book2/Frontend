@@ -51,10 +51,10 @@ export const reducer = (state = initialState, action) => {
                 displayedBooks: action.payload,
             };
         case BOOK_BY_ID:
-            console.log(action.payload);
+            console.log('action', action.payload);
             return {
                 ...state,
-                oneBook: action.payload,
+                oneBook: { ...action.payload },
                 reviews: action.reviews,
             };
         case USER_LOGIN:
@@ -93,7 +93,6 @@ export const reducer = (state = initialState, action) => {
         case REVIEW_DELETE:
             return {
                 ...state,
-                reviews: action.payload,
             };
         case POST_REVIEW:
             return {
