@@ -1,26 +1,25 @@
 import React from "react";
-import axios from "axios";
 
 const authentication = Component1 => Component2 =>
   class extends React.Component {
     state = {
-      isLoggedIn: true
+      isLoggedIn: true,
     };
-
-    // componentDidUpdate() {
-    //   if (localStorage.getItem("jwt")) {
-    //     this.setState({
-    //       isLoggedIn: true
-    //     });
-    //   } else {
-    //     this.setState({
-    //       isLoggedIn: false
-    //     });
-    //   }
-    // }
+    componentDidUpdate() {
+      console.log("hi");
+      if (localStorage.getItem("jwt")) {
+        this.setState({
+          isLoggedIn: false,
+        });
+      } else {
+        this.setState({
+          isLoggedIn: true,
+        });
+      }
+    }
 
     render() {
-      if (this.state.isLoggedIn) return <Component1 />;
+      if (this.props.isLoggedIn) return <Component1 />;
       return <Component2 />;
     }
   };

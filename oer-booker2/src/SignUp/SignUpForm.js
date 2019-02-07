@@ -8,7 +8,7 @@ class SignUpForm extends React.Component {
   onChange = e => {
     this.props.signUpOnChange({
       ...this.props.signUpInfo,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
@@ -60,7 +60,7 @@ class SignUpForm extends React.Component {
 
         <div className="other-options">
           <small>
-            <Link to="/login">Already have an account?</Link>
+            <p onClick={this.props.loginMe}>Already have an account?</p>
           </small>
         </div>
       </form>
@@ -69,12 +69,12 @@ class SignUpForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  signUpInfo: state.signUpInfo
+  signUpInfo: state.signUpInfo,
 });
 
 export default connect(
   mapStateToProps,
   {
-    signUpOnChange
+    signUpOnChange,
   }
 )(SignUpForm);
