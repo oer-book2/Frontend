@@ -5,7 +5,14 @@ import { connect } from "react-redux";
 import authentication from "./Authentication/authentication";
 import Login from "./Login/Login";
 import Home from "./Components/Home";
-import { getUsers, getBooks, loginOnChange, signUpOnChange } from "./actions";
+import {
+  getUsers,
+  getBooks,
+  loginOnChange,
+  signUpOnChange,
+  itemSearch,
+  searchOnChange
+} from "./actions";
 
 import "./App.css";
 
@@ -16,8 +23,13 @@ class App extends Component {
     // this.props.getBooks();
   }
 
-  onSelect = e => {
-    console.log("testing", e.target.value);
+  searchOnChange = e => {
+    this.props.searchOnChange(e.target.value);
+    this.props.itemSearch(
+      this.props.books.filter(book =>
+        book.title.toLowerCase().includes(e.target.value.toLowerCase())
+      )
+    );
   };
 
   render() {
@@ -26,8 +38,12 @@ class App extends Component {
       return (
         <div className="App">
           <h1>Home</h1>
-          <input type="text" placeholder="Search by title" />
-          <input type="button" value="Search" />
+          <input
+            type="text"
+            placeholder="Search by title"
+            value={this.props.search}
+            onChange={e => this.searchOnChange(e)}
+          />
           <br />
           <select onSelect={e => this.onSelect(e)}>
             <option>Math</option>
@@ -35,7 +51,7 @@ class App extends Component {
             <option>Arts</option>
             <option>Psychology</option>
           </select>
-          <Home bookList={this.props.books} />
+          <Home bookList={this.props.displayedBooks} />
         </div>
       );
     } else {
@@ -55,14 +71,23 @@ class App extends Component {
 const mapStateToProps = state => ({
   users: state.users,
   books: state.books,
+  displayedBooks: state.displayedBooks,
   loginInfo: state.loginInfo,
   signUpInfo: state.signUpInfo,
-  isLoggedIn: state.isLoggedIn
+  isLoggedIn: state.isLoggedIn,
+  search: state.search
 });
 
 export default connect(
   mapStateToProps,
-  { getUsers, getBooks, loginOnChange, signUpOnChange }
+  {
+    getUsers,
+    getBooks,
+    loginOnChange,
+    signUpOnChange,
+    itemSearch,
+    searchOnChange
+  }
 )(App);
 
 // export default authentication(App)(Login);
