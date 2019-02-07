@@ -11,11 +11,11 @@ import App from "./App";
 import { reducer } from "./reducer";
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
-const AppWithRouter = withRouter(App);
+// const AppWithRouter = withRouter(App);
 ReactDOM.render(
   <Provider store={store}>
     <Router>
-      <AppWithRouter />
+      <App />
     </Router>
   </Provider>,
   document.getElementById("root")

@@ -1,28 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import BookDetails from "./BookDetails";
 
-const BookList = props => (
-  <div className="book-list">
-    {props.bookList.map(book => (
-      <div key={book.id}>
-        <Link
-          to={`books/${book.id}`}
-          className="book"
-          onClick={_ => props.getBookById(book.id)}
-        >
-          <img src={book.imageArea} style={{ width: "25%", marginTop: "2%" }} />
-          <h3 style={{ width: "25%", margin: "2% auto" }}>{book.title}</h3>
-        </Link>
+import { getBookById } from "../actions";
+
+class BookList extends React.Component {
+  render() {
+    console.log(this.props.displayedBooks);
+    return (
+      <div className="book-list">
+        {this.props.displayedBooks.map(book => {
+          return <BookDetails key={book.id} book={book} />;
+        })}
       </div>
-    ))}
-  </div>
-);
-
-export default BookList;
-{
-  /* <Book
-        bookTitle={book.title}
-        bookRating={book.rating}
-        img={book.imageArea}
-      /> */
+    );
+  }
 }
+
+const mapStateToProps = state => {
+  return { displayedBooks: state.displayedBooks };
+};
+
+export default connect(
+  mapStateToProps,
+  {}
+)(BookList);

@@ -12,13 +12,18 @@ import {
   SIGNUP_ONCHANGE,
   ITEM_SEARCH,
   SEARCH_ONCHANGE,
-  BOOK_BY_ID
+  BOOK_BY_ID,
+  loggedIn,
+  IS_LOGGED_IN,
+  REVIEW_DELETE,
+  POST_REVIEW
 } from "../actions";
 
 const initialState = {
   users: [],
   books: [],
   displayedBooks: [],
+  reviews: [],
 
   loginInfo: {
     name: "",
@@ -30,7 +35,7 @@ const initialState = {
     password: "",
     confirmPassword: ""
   },
-  isLoggedIn: true,
+  isLoggedIn: false,
   search: ""
 };
 
@@ -48,7 +53,8 @@ export const reducer = (state = initialState, action) => {
       console.log(action.payload);
       return {
         ...state,
-        displayedBooks: action.payload
+        displayedBooks: action.payload,
+        reviews: action.reviews
       };
     case USER_LOGIN:
       return {
@@ -66,6 +72,7 @@ export const reducer = (state = initialState, action) => {
         signUpInfo: action.payload
       };
     case ITEM_SEARCH:
+      console.log(action.payload);
       return {
         ...state,
         displayedBooks: action.payload
@@ -77,6 +84,21 @@ export const reducer = (state = initialState, action) => {
       };
     case FETCH_FAILED:
       return {};
+    case IS_LOGGED_IN:
+      return {
+        ...state,
+        isLoggedIn: action.payload
+      };
+    case REVIEW_DELETE:
+      return {
+        ...state,
+        reviews: action.payload
+      };
+    case POST_REVIEW:
+      return {
+        ...state,
+        reviews: [...state.reviews, { ...action.payload }]
+      };
     default:
       return state;
   }
