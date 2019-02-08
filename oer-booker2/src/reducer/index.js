@@ -1,7 +1,4 @@
-import dummyData from "../dummyData";
-
 import {
-  FETCHING_USER,
   USERS_FETCHED,
   FETCHING_BOOKS,
   BOOKS_FETCHED,
@@ -13,7 +10,7 @@ import {
   BOOK_BY_ID,
   IS_LOGGED_IN,
   REVIEW_DELETE,
-  POST_REVIEW,
+  POST_REVIEW
 } from "../actions";
 
 const initialState = {
@@ -26,10 +23,10 @@ const initialState = {
   signUpInfo: {
     name: "",
     password: "",
-    confirmPassword: "",
+    confirmPassword: ""
   },
   isLoggedIn: false,
-  search: "",
+  search: ""
 };
 
 export const reducer = (state = initialState, action) => {
@@ -40,49 +37,48 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         books: action.payload,
-        displayedBooks: action.payload,
+        displayedBooks: action.payload
       };
     case BOOK_BY_ID:
-      console.log("action", action.payload);
       return {
         ...state,
         oneBook: { ...action.payload },
-        reviews: action.reviews,
+        reviews: action.reviews
       };
     case SIGNUP_ONCHANGE:
       return {
         ...state,
-        signUpInfo: action.payload,
+        signUpInfo: action.payload
       };
     case ITEM_SEARCH:
       console.log(action.payload);
       return {
         ...state,
-        displayedBooks: action.payload,
+        displayedBooks: action.payload
       };
     case SEARCH_ONCHANGE:
       return {
         ...state,
-        search: action.payload,
+        search: action.payload
       };
     case FETCH_FAILED:
       return {
         ...state,
-        isLoggedIn: false,
+        isLoggedIn: false
       };
     case IS_LOGGED_IN:
       return {
         ...state,
-        isLoggedIn: action.payload,
+        isLoggedIn: action.payload
       };
     case REVIEW_DELETE:
       return {
-        ...state,
+        ...state
       };
     case POST_REVIEW:
       return {
         ...state,
-        reviews: [...state.reviews, { ...action.payload }],
+        reviews: [...state.reviews, { ...action.payload }]
       };
     default:
       return state;

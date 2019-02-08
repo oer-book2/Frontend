@@ -1,16 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import "./bookDetails.css";
+
 const BookDetails = props => {
   const { title, id, imageArea } = props.book;
+  let rating = Number(props.book["avg_rating"]);
+  let stars = [1, 2, 3, 4, 5];
+  stars.fill("star", 0, rating);
   return (
-    <div>
-      <img src={imageArea} style={{ width: "25%", marginTop: "2%" }} />
-      <Link to={`books/${id}`} className="book">
-        <h3 style={{ width: "25%", margin: "2% auto" }}>{title}</h3>
-      </Link>
-      <p style={{ width: "25%", margin: "2% auto" }}>
-        Average rating: {props.book["avg_rating"]}
-      </p>
+    <div className="book-details">
+      <img
+        className="book-img"
+        src={require("../images/defaultImage.png")}
+        alt="logo"
+      />
+      <div className="book-info">
+        <Link to={`books/${id}`} className="book">
+          <h3>{title}</h3>
+        </Link>
+        <div className="average">
+          Average rating:
+          <div>
+            {stars.map(star => {
+              if (star === "star") {
+                return <i className="fas fa-star" />;
+              } else {
+                return <i className="far fa-star" />;
+              }
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

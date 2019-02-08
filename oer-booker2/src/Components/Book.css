@@ -1,0 +1,71 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0 auto;
+}
+
+.bookInfo {
+  display: flex;
+  margin-top: 10px;
+}
+
+.bookInfo img {
+  width: 25%;
+  height: 300px;
+  padding: 0 5%;
+  min-width: 300px;
+}
+
+.bookInfo div {
+  padding-right: 5%;
+  width: 70%;
+}
+
+.reviews {
+  width: 100%;
+  margin: 10px 5%;
+}
+
+.editing {
+  margin: 0 5%;
+}
+
+.editing textarea {
+  display: block;
+  width: 25%;
+  margin: 10px 0 5px 0;
+}
+
+.addComm {
+  margin: 0 5%;
+}
+
+.addComm textarea {
+  width: 90%;
+}
+
+.addCom button {
+  margin: 2px 0 10px 0;
+}
+
+.addCom .dropdown {
+  margin-right: 0;
+}
+
+a {
+  cursor: pointer;
+  padding-bottom: 1px;
+}
+
+@media only screen and (max-width: 600px) {
+  .bookInfo {
+    flex-direction: column;
+    padding: 0 2%;
+  }
+
+  .bookInfo img {
+    margin: 0 auto;
+  }
+}

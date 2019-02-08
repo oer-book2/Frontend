@@ -1,0 +1,40 @@
+.book-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 0 5%;
+}
+
+.book-details {
+  width: 48%;
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.book-details img {
+  width: 20%;
+  min-width: 100px;
+}
+
+.book-info {
+  margin-left: 1%;
+}
+
+@media only screen and (max-width: 600px) {
+  .book-list {
+    flex-direction: column;
+  }
+  .book-details {
+    width: 100%;
+  }
+
+  .book-details h3 {
+    font-size: 1.5rem;
+  }
+
+  .average {
+    display: flex;
+    flex-direction: column;
+  }
+}

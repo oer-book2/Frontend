@@ -1,21 +1,55 @@
-import React from 'react';
+import React from "react";
+import "./Book.css";
 
 class BookInfo extends React.Component {
-    render() {
-        const { title, author, subject, description } = this.props.book;
-        return (
-            <div>
-                <img src="" style={{ width: '25%', marginTop: '2%' }} />
-                <h3 style={{ width: '25%', margin: '2% auto' }}>{title}</h3>
-                <p style={{ width: '25%', margin: '2% auto' }}>{author}</p>
-                <p style={{ width: '25%', margin: '2% auto' }}>{subject}</p>
-                <p style={{ width: '25%', margin: '2% auto' }}>{description}</p>
-                <p style={{ width: '25%', margin: '2% auto' }}>
-                    Average rating: {Math.round(this.props.book['avg_rating'])}
-                </p>
-            </div>
-        );
+  stars = () => {
+    let rating = this.props.book["avg_rating"];
+    for (let i = 0; i < rating; i++) {
+      return;
     }
+  };
+
+  render() {
+    const {
+      title,
+      author,
+      subject,
+      description,
+      imageArea,
+      link
+    } = this.props.book;
+    let rating = Number(this.props.book["avg_rating"]);
+    let stars = [1, 2, 3, 4, 5];
+    stars.fill("star", 0, rating);
+    let newSubject = "";
+    if (subject) {
+      newSubject = subject[0].toUpperCase() + subject.slice(1);
+    }
+    return (
+      <div className="bookInfo">
+        <img src={require("../images/defaultImage.png")} alt="book" />
+        <div>
+          <h3>{title}</h3>
+          <p>Author: {author}</p>
+          <p>Subject: {newSubject}</p>
+          <a href={link} target="_blank" rel="noopener noreferrer">
+            Link to textbook
+          </a>
+          <p>{description}</p>
+          <p>
+            Average rating:
+            {stars.map(star => {
+              if (star === "star") {
+                return <i className="fas fa-star" />;
+              } else {
+                return <i className="far fa-star" />;
+              }
+            })}
+          </p>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default BookInfo;
