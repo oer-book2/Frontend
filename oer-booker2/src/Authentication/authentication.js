@@ -22,7 +22,7 @@ const authentication = Component1 => Component2 =>
         };
 
         render() {
-            if (this.state.isLoggedIn) return <Component1 />;
+            if (this.state.isLoggedIn) return <Component1 updateLogin={this.updateLogin} />;
             return <Component2 updateLogin={this.updateLogin} />;
         }
     };

@@ -51,16 +51,18 @@ class Book extends React.Component {
                     postReview={this.props.postReview}
                     ratingOnChange={this.ratingOnChange}
                     commentAreaOnChange={this.commentAreaOnChange}
+                    history={this.props.history}
                 />
 
                 {this.props.reviews.map(review => {
                     return (
-                        <div>
+                        <div key={review.id}>
                             <Reviews
                                 deleteComment={this.props.deleteComment}
-                                key={review.id}
                                 review={review}
                                 updateReview={this.props.updateReview}
+                                history={this.props.history}
+                                tid={review.textbook_id}
                             />
                         </div>
                     );

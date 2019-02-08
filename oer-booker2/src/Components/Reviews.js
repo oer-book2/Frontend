@@ -10,11 +10,18 @@ class Reviews extends React.Component {
     };
     deleteC = e => {
         e.preventDefault();
-        this.props.deleteComment(this.props.review.id);
+        this.props.deleteComment(this.props.review.id, this.props.tid);
     };
 
     editMe = e => {
-        this.setState({ editing: true });
+        this.setState({
+            editing: true,
+            review: {
+                comment: this.props.review.comment,
+                rating: this.props.review.rating,
+                name: localStorage.getItem('name'),
+            },
+        });
     };
 
     commentAreaOnChange = e => {
@@ -35,17 +42,29 @@ class Reviews extends React.Component {
     };
 
     postMe = e => {
-        this.props.updateReview(this.props.review.id, this.state.review);
+        this.props.updateReview(
+            this.props.review.id,
+            this.state.review,
+            this.props.tid
+        );
+        this.setState({ editing: false });
     };
 
     render() {
+        console.log(this.props.review);
         const { comment, rating } = this.props.review;
 
         if (this.state.editing) {
             return (
                 <div>
-                    <textarea onChange={e => this.commentAreaOnChange(e)} />
-                    <select onChange={e => this.ratingOnChange(e)}>
+                    <textarea
+                        value={this.state.review.comment}
+                        onChange={this.commentAreaOnChange}
+                    />
+                    <select
+                        value={this.state.review.rating}
+                        onChange={this.ratingOnChange}
+                    >
                         <option>1</option>
                         <option>2</option>
                         <option>3</option>

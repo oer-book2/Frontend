@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { signUpOnChange } from '../actions';
+import './signup.css';
 
 class SignUpForm extends React.Component {
     onChange = e => {

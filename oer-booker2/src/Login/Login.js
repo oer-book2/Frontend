@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import LoginForm from './LoginForm';
 import SignUpForm from '../SignUp/SignUpForm';
+import './login.css';
 
 class Login extends React.Component {
     state = {

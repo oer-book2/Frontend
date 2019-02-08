@@ -11,7 +11,7 @@ class BookInfo extends React.Component {
                 <p style={{ width: '25%', margin: '2% auto' }}>{subject}</p>
                 <p style={{ width: '25%', margin: '2% auto' }}>{description}</p>
                 <p style={{ width: '25%', margin: '2% auto' }}>
-                    Average rating: {this.props.book['avg-rating']}
+                    Average rating: {Math.round(this.props.book['avg_rating'])}
                 </p>
             </div>
         );

@@ -9,7 +9,16 @@ class RouteArea extends Component {
         return (
             <div>
                 <Home />
-                <Route exact path="/" component={BookList} />
+                <Route
+                    exact
+                    path="/"
+                    render={props => (
+                        <BookList
+                            {...props}
+                            pdateLogin={this.props.updateLogin}
+                        />
+                    )}
+                />
                 <Route path="/books/:id" component={Book} />
             </div>
         );
