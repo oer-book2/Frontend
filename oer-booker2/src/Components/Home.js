@@ -1,16 +1,48 @@
 import React, { Component } from "react";
-import BookList from "./BookList";
-import Book from "../Components/Book";
-import { searchOnChange, itemSearch, getBooks, loggedIn } from "../actions";
+import { searchOnChange, itemSearch, getBooks } from "../actions";
+import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from "reactstrap";
 
 import { connect } from "react-redux";
-import { Route, Link, Switch } from "react-router-dom";
+import { Link } from "react-router-dom";
+import "./home.css";
 
 class Home extends Component {
+  state = {
+    dropdownOpen: false
+  };
+
+  toggle = e => {
+    e.preventDefault();
+    this.setState(prevState => ({
+      dropdownOpen: !prevState.dropdownOpen
+    }));
+  };
+
   componentDidMount() {
-    //this.props.getUsers();
-    this.props.getBooks();
+    this.fetchBooks();
+  }
+
+  fetchBooks = () => {
+    let options = {};
     if (localStorage.getItem("jwt")) {
+      options = {
+        headers: {
+          Authorization: localStorage.getItem("jwt")
+        }
+      };
+    }
+    this.props.getBooks(options);
+  };
+
+  componentDidUpdate(prevProps) {
+    if (this.props.books.length === 0) {
+      localStorage.removeItem("jwt");
+      this.props.updateLogin();
     }
   }
 
@@ -24,7 +56,6 @@ class Home extends Component {
   };
 
   chosenOne = value => {
-    console.log(value);
     if (value === "All") {
       this.props.itemSearch(this.props.books);
     } else {
@@ -36,27 +67,53 @@ class Home extends Component {
     }
   };
 
+  select = e => {
+    this.chosenOne(e.currentTarget.textContent);
+  };
+
+  logOut = e => {
+    localStorage.removeItem("jwt");
+    this.props.updateLogin();
+  };
+
   render() {
     return (
-      <div>
-        <Link to="/">
-          <h1>Home</h1>
+      <div className="search-div">
+        <Link to="/" onClick={this.fetchBooks}>
+          <h1 className="home">Home</h1>
         </Link>
-        <input
-          type="text"
-          placeholder="Search by title"
-          value={this.props.search}
-          onChange={e => this.searchOnChange(e)}
-        />
-        <br />
-        <select onChange={e => this.chosenOne(e.target.value)}>
-          <option>All</option>
-          <option>Math</option>
-          <option>English</option>
-          <option>History</option>
-          <option>Art</option>
-          <option>Psychology</option>
-        </select>
+        <div className="mobile">
+          <input
+            className="search-title"
+            type="text"
+            placeholder="&#xF002;Search by title"
+            value={this.props.search}
+            onChange={e => this.searchOnChange(e)}
+          />
+
+          <Dropdown
+            className="dropdown"
+            isOpen={this.state.dropdownOpen}
+            toggle={this.toggle}
+          >
+            <DropdownToggle caret>Subjects</DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem header />
+              <DropdownItem onClick={this.select}>All</DropdownItem>
+              <DropdownItem onClick={this.select}>English</DropdownItem>
+              <DropdownItem onClick={this.select}>History</DropdownItem>
+              <DropdownItem onClick={this.select}>Math</DropdownItem>
+              <DropdownItem onClick={this.select}>Art</DropdownItem>
+              <DropdownItem onClick={this.select}>Psychology</DropdownItem>
+              <DropdownItem onClick={this.select}>Science</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+        </div>
+
+        <div className="exit-div">
+          <i className="exit fab fa-angellist fa-3x" onClick={this.logOut} />
+          <small>Log out</small>
+        </div>
       </div>
     );
   }
@@ -64,7 +121,7 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   books: state.books,
-  search: state.search,
+  search: state.search
 });
 
 export default connect(

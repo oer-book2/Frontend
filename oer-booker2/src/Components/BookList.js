@@ -1,26 +1,26 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import BookDetails from './BookDetails';
+import React from "react";
+import { connect } from "react-redux";
+import BookDetails from "./BookDetails";
 
-import { getBookById } from '../actions';
+import "./bookDetails.css";
 
 class BookList extends React.Component {
-    render() {
-        return (
-            <div className="book-list">
-                {this.props.displayedBooks.map(book => {
-                    return <BookDetails key={book.id} book={book} />;
-                })}
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="book-list">
+        {this.props.displayedBooks.map(book => {
+          return <BookDetails key={book.id} book={book} />;
+        })}
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => {
-    return { displayedBooks: state.displayedBooks };
+  return { displayedBooks: state.displayedBooks };
 };
 
 export default connect(
-    mapStateToProps,
-    {}
+  mapStateToProps,
+  {}
 )(BookList);

@@ -8,7 +8,7 @@ class App extends Component {
     render() {
         return (
             <div>
-                <RouteArea />
+                <RouteArea updateLogin={this.props.updateLogin} />
             </div>
         );
     }

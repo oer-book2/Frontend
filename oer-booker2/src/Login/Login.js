@@ -1,12 +1,12 @@
 import React from "react";
-import { Route } from "react-router-dom";
 
 import LoginForm from "./LoginForm";
 import SignUpForm from "../SignUp/SignUpForm";
+import "./login.css";
 
 class Login extends React.Component {
   state = {
-    login: true,
+    login: true
   };
 
   componentDidMount() {
@@ -25,11 +25,19 @@ class Login extends React.Component {
     if (this.state.login) {
       return (
         <div className="login">
-          <LoginForm signUp={this.signUp} />
+          <LoginForm
+            signUp={this.signUp}
+            updateLogin={this.props.updateLogin}
+          />
         </div>
       );
     } else {
-      return <SignUpForm loginMe={this.loginMe} />;
+      return (
+        <SignUpForm
+          loginMe={this.loginMe}
+          updateLogin={this.props.updateLogin}
+        />
+      );
     }
   }
 }

@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const FETCHING_USERS = "FETCHING_USERS";
 export const USERS_FETCHED = "USERS_FETCHED";
+export const FETCHING_USERS = "FETCHING_USERS";
 export const FETCHING_BOOKS = "FETCHING_BOOKS";
 export const BOOKS_FETCHED = "BOOKS_FETCHED";
 export const FETCH_FAILED = "FETCH_FAILED";
@@ -16,11 +16,11 @@ export const POST_REVIEW = "POST_REVIEW";
 
 const userEndpoint = `https://oerbookr2.herokuapp.com/oerbooker/users`;
 const booksEndpoint = "https://oerbookr2.herokuapp.com/oerbooker/textbooks";
-const booksByIdEndpoint =
-  "https://oerbookr2.herokuapp.com/oerbooker/textbooks/{textbookId}";
-const logInEndpoint = "https://oerbookr2.herokuapp.com/oerbooker/login";
+// const booksByIdEndpoint =
+//     'https://oerbookr2.herokuapp.com/oerbooker/textbooks/{textbookId}';
+// const logInEndpoint = 'https://oerbookr2.herokuapp.com/oerbooker/login';
 const signUpEndpoint = `https://oerbookr2.herokuapp.com/oerbooker/register`;
-const reviewsEndpoint = `https://oerbookr2.herokuapp.com/oerbooker/users/reviews`;
+// const reviewsEndpoint = `https://oerbookr2.herokuapp.com/oerbooker/users/reviews`;
 
 export const getUsers = _ => dispatch => {
   dispatch({ type: FETCHING_USERS });
@@ -31,13 +31,12 @@ export const getUsers = _ => dispatch => {
     .catch(err => dispatch({ type: FETCH_FAILED, payload: err }));
 };
 
-export const getBooks = _ => dispatch => {
+export const getBooks = options => dispatch => {
   dispatch({ type: FETCHING_BOOKS });
 
   axios
-    .get(booksEndpoint)
+    .get(booksEndpoint, options)
     .then(res => {
-      console.log(res);
       dispatch({ type: BOOKS_FETCHED, payload: res.data });
     })
     .catch(err => dispatch({ type: FETCH_FAILED, payload: err }));
@@ -54,11 +53,10 @@ export const getBookById = id => dispatch => {
   axios
     .get(`https://oerbookr2.herokuapp.com/oerbooker/textbooks/${id}`)
     .then(res => {
-      console.log(res);
       dispatch({
         type: BOOK_BY_ID,
         payload: res.data.bookdata[0],
-        reviews: res.data.reviews,
+        reviews: res.data.reviews
       });
     })
     .catch(err => console.log(err));
@@ -70,27 +68,38 @@ export const signUpOnChange = signUpInfo => {
     payload: {
       name: signUpInfo.name,
       password: signUpInfo.password,
-      confirmPassword: signUpInfo.confirmPassword,
-    },
+      confirmPassword: signUpInfo.confirmPassword
+    }
   };
 };
 export const itemSearch = searchItem => {
   return {
     type: ITEM_SEARCH,
-    payload: searchItem,
+    payload: searchItem
   };
 };
 export const searchOnChange = searchItem => {
   return {
     type: SEARCH_ONCHANGE,
-    payload: searchItem,
+    payload: searchItem
   };
 };
 
-export const deleteComment = id => dispatch => {
+export const deleteComment = (id, tid) => dispatch => {
   axios
     .delete(`https://oerbookr2.herokuapp.com/oerbooker/reviews/${id}`)
-    .then(res => dispatch({ type: REVIEW_DELETE, payload: "success" }));
+    .then(res =>
+      axios
+        .get(`https://oerbookr2.herokuapp.com/oerbooker/textbooks/${tid}`)
+        .then(res => {
+          dispatch({
+            type: BOOK_BY_ID,
+            payload: res.data.bookdata[0],
+            reviews: res.data.reviews
+          });
+        })
+        .catch(err => console.log(err))
+    );
 };
 export const postReview = (review, id) => dispatch => {
   axios
@@ -98,12 +107,34 @@ export const postReview = (review, id) => dispatch => {
       `https://oerbookr2.herokuapp.com/oerbooker/textbooks/${id}/reviews`,
       review
     )
-    .then(res => dispatch({ type: POST_REVIEW, payload: res.data }));
+    .then(res => {
+      axios
+        .get(`https://oerbookr2.herokuapp.com/oerbooker/textbooks/${id}`)
+        .then(res => {
+          dispatch({
+            type: BOOK_BY_ID,
+            payload: res.data.bookdata[0],
+            reviews: res.data.reviews
+          });
+        })
+        .catch(err => console.log(err));
+    });
 };
 
-export const updateReview = (id, review) => dispatch => {
+export const updateReview = (id, review, tid) => dispatch => {
   axios
     .put(`https://oerbookr2.herokuapp.com/oerbooker/reviews/${id}`, review)
-    .then(res => console.log(res))
+    .then(res => {
+      axios
+        .get(`https://oerbookr2.herokuapp.com/oerbooker/textbooks/${tid}`)
+        .then(res => {
+          dispatch({
+            type: BOOK_BY_ID,
+            payload: res.data.bookdata[0],
+            reviews: res.data.reviews
+          });
+        })
+        .catch(err => console.log(err));
+    })
     .catch(err => console.log(err));
 };
